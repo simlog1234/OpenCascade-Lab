@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Shared MSBuild properties for every project in the solution.
+  OCCT_ROOT can be overridden from the environment / command line:
+    msbuild OpenCascade-Lab.sln /p:OcctRoot=D:\occt-8.0.1\
+-->
+<Project>
+  <PropertyGroup>
+    <RepoRoot>$(MSBuildThisFileDirectory)</RepoRoot>
+
+    <!-- Where scripts/setup-occt.ps1 extracted the OCCT V8.0.1 "vc14-64" package -->
+    <OcctRoot Condition="'$(OcctRoot)' == '' And '$(OCCT_ROOT)' != ''">$(OCCT_ROOT)</OcctRoot>
+    <OcctRoot Condition="'$(OcctRoot)' == ''">$(RepoRoot)third_party\occt\</OcctRoot>
+    <OcctRoot Condition="!HasTrailingSlash('$(OcctRoot)')">$(OcctRoot)\</OcctRoot>
+    <OcctThirdPartyRoot Condition="'$(OcctThirdPartyRoot)' == ''">$(RepoRoot)third_party\3rdparty\</OcctThirdPartyRoot>
+
+    <OcctIncDir>$(OcctRoot)inc</OcctIncDir>
+    <!-- Debug build links against libd / loads bind; Release uses lib / bin -->
+    <OcctLibDir Condition="'$(Configuration)' == 'Debug'">$(OcctRoot)win64\vc14\libd</OcctLibDir>
+    <OcctLibDir Condition="'$(Configuration)' != 'Debug'">$(OcctRoot)win64\vc14\lib</OcctLibDir>
+    <OcctBinDir Condition="'$(Configuration)' == 'Debug'">$(OcctRoot)win64\vc14\bind</OcctBinDir>
+    <OcctBinDir Condition="'$(Configuration)' != 'Debug'">$(OcctRoot)win64\vc14\bin</OcctBinDir>
+
+    <!-- 3rd-party runtime DLL folders that OCCT DLLs depend on (freetype, tbb, ...) -->
+    <!-- (TKernel -> tbb12 / jemalloc, TKService -> freetype / FreeImage / openvr_api / ffmpeg) -->
+    <OcctThirdPartyBinDirs>$(OcctThirdPartyRoot)freetype-2.13.3-x64\bin;$(OcctThirdPartyRoot)tbb-2021.13.0-x64\bin;$(OcctThirdPartyRoot)freeimage-3.18.0-x64\bin;$(OcctThirdPartyRoot)jemalloc-vc14-64\bin;$(OcctThirdPartyRoot)openvr-1.14.15-64\bin\win64;$(OcctThirdPartyRoot)ffmpeg-3.3.4-64\bin;$(OcctThirdPartyRoot)tcltk-8.6.15-x64\bin</OcctThirdPartyBinDirs>
+    <OcctRuntimeDirs>$(OcctBinDir);$(OcctThirdPartyBinDirs)</OcctRuntimeDirs>
+  </PropertyGroup>
+
+  <!-- Everything in this repo is 64-bit only (OCCT package is vc14-64) -->
+  <PropertyGroup Condition="'$(MSBuildProjectExtension)' == '.csproj'">
+    <Platforms>x64</Platforms>
+    <PlatformTarget>x64</PlatformTarget>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <LangVersion>latest</LangVersion>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+  </PropertyGroup>
+</Project>

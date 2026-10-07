@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <RootNamespace>OcctLab.Cli</RootNamespace>
+    <AssemblyName>OcctLab.Cli</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\OcctLab.Runtime\OcctLab.Runtime.csproj" />
+    <!-- C++/CLI bridge: built by MSBuild.exe (Visual Studio), not by `dotnet build` -->
+    <ProjectReference Include="..\OcctProxy\OcctProxy.vcxproj" />
+  </ItemGroup>
+
+</Project>

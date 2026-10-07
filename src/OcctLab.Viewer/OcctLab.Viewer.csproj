@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <RootNamespace>OcctLab.Viewer</RootNamespace>
+    <AssemblyName>OcctLab.Viewer</AssemblyName>
+    <!-- WPF window hosting a WinForms control: OCCT's OpenGL view needs a real HWND -->
+    <UseWPF>true</UseWPF>
+    <UseWindowsForms>true</UseWindowsForms>
+    <ApplicationHighDpiMode>PerMonitorV2</ApplicationHighDpiMode>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- WPF + WinForms both add implicit usings; keep the WPF ones global and import WinForms explicitly -->
+    <Using Remove="System.Windows.Forms" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\OcctLab.Runtime\OcctLab.Runtime.csproj" />
+    <ProjectReference Include="..\OcctProxy\OcctProxy.vcxproj" />
+  </ItemGroup>
+
+</Project>

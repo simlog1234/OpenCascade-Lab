@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!--
+    Tiny helper library that tells the process where the native OCCT DLLs live.
+    The paths are baked in at build time from Directory.Build.props so that
+    F5 in Visual Studio and running the exe from Explorer both work without
+    copying ~1 GB of OCCT / 3rd-party DLLs into every output folder.
+  -->
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <RootNamespace>OcctLab.Runtime</RootNamespace>
+    <AssemblyName>OcctLab.Runtime</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <AssemblyMetadata Include="OcctRoot" Value="$(OcctRoot)" />
+    <AssemblyMetadata Include="OcctRuntimeDirs" Value="$(OcctRuntimeDirs)" />
+    <AssemblyMetadata Include="OcctConfiguration" Value="$(Configuration)" />
+  </ItemGroup>
+
+</Project>

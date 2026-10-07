@@ -68,3 +68,8 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+### OCCT binaries (downloaded by scripts/setup-occt.ps1)
+third_party/
+
+### Sample outputs
+output/
